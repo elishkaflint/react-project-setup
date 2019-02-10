@@ -190,6 +190,40 @@ Run the application:
 
 `npm start`
 
+
+## Styled Components
+
+`npm i styled-components --save-dev`
+
+Create a styled button and use props to create different styles:
+
+```javascript
+import styled, { css } from 'styled-components';
+
+const Button = styled.button`
+    color: red;
+
+    ${props => props.primary && css`
+        background: blue;
+        color: white;
+    `}
+`;
+```
+
+Then use the button as a normal component:
+
+`<Button primary>Button</Button>`
+
+Note that ``` props => props.primary && css`...` ``` is the same as ``` props => props.primary ? css`...` : "" ```
+
+The ``` css`...` ``` syntax is a 'tagged template literal', a type of function call.
+
+
+
+
+
+
+
 ---
 
 _With thanks to https://www.valentinog.com/blog/react-webpack-babel/_
