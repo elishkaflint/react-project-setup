@@ -190,8 +190,9 @@ Run the application:
 
 `npm start`
 
-
 ## Styled Components
+
+[Styled Components](https://www.styled-components.com/) provides a nice way to apply CSS to components in React.
 
 `npm i styled-components --save-dev`
 
@@ -219,11 +220,64 @@ Note that ``` props => props.primary && css`...` ``` is the same as ``` props =>
 The ``` css`...` ``` syntax is a 'tagged template literal', a type of function call.
 
 
+## Storybook
 
+[Storybook](https://storybook.js.org/) is a great tool for creating and documenting design of various features in your application.
 
+`npm i --save-dev @storybook/react`
 
+Add the storybook script to your package.json:
 
+```
+{
+  "scripts": {
+    "storybook": "start-storybook -p 9001 -c .storybook"
+  }
+}
+```
+
+Create a config file:
+
+```
+mkdir .storybook
+cd .storybook
+touch config.js
+```
+
+```javascript
+// in config.js
+
+import { configure } from "@storybook/react";
+
+const req = require.context("../src", true, /\.stories\.js$/);
+function loadStories() {
+    req.keys().forEach(filename => req(filename));
+}
+
+configure(loadStories, module);
+
+```
+
+Write your "stories":
+
+Our config means that Storybook will pick up any file ending .stories.js
+
+```javascript
+// in Button.stories.js
+
+import React from 'react';
+import { storiesOf } from '@storybook/react';
+import Button from './Button';
+
+storiesOf('Button', module)
+    .add('Normal button', () => ( <Button>Button</Button>))
+    .add('Primary button', () => ( <Button primary>Button</Button>));
+```
+
+Run storybook:
+
+`npm run storybook`
 
 ---
 
-_With thanks to https://www.valentinog.com/blog/react-webpack-babel/_
+_With some help from https://www.valentinog.com/blog/react-webpack-babel/_
